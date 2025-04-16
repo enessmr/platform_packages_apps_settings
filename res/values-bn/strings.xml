@@ -2842,6 +2842,9 @@
     <string name="nfc_payment_pay_with" msgid="7524904024378144072">"ট্যাপ করে অর্থপ্রদান করুন টার্মিন্যালে, এর মাধ্যমে পেমেন্ট করুন:"</string>
     <string name="nfc_how_it_works_title" msgid="1984068457698797207">"টার্মিনালে পেমেন্টের পদ্ধতি"</string>
     <string name="nfc_how_it_works_content" msgid="4749007806393224934">"একটি পেমেন্টের অ্যাপ্লিকেশান সেট আপ করুন৷ তারপরে যোগাযোগহীন চিহ্ন সহ কোনো টার্মিনালের উপর শুধু আপনার ফোনের পিছনের দিকটি ধরুন৷"</string>
+    <string name="nfc_payment_pay_with" msgid="7524904024378144072">"ট্যাপ করে অর্থপ্রদান করুন টার্মিন্যালে, এর মাধ্যমে পেমেন্ট করুন:"</string>
+    <string name="nfc_how_it_works_title" msgid="1984068457698797207">"টার্মিনালে পেমেন্টের পদ্ধতি"</string>
+    <string name="nfc_how_it_works_content" msgid="4749007806393224934">"একটি পেমেন্টের অ্যাপ্লিকেশান সেট আপ করুন৷ তারপরে যোগাযোগহীন চিহ্ন সহ কোনো টার্মিনালের উপর শুধু আপনার ফোনের পিছনের দিকটি ধরুন৷"</string>
     <string name="nfc_how_it_works_got_it" msgid="259653300203217402">"বুঝেছি"</string>
     <string name="nfc_more_title" msgid="815910943655133280">"আরো..."</string>
     <string name="nfc_payment_set_default_label" msgid="7315817259485674542">"আপনার পছন্দ হিসেবে সেট করুন?"</string>

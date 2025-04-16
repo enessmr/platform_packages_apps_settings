@@ -1572,6 +1572,7 @@
 
     <!-- Checkbox message in pairing dialogs.  [CHAR LIMIT=NONE] -->
     <string name="bluetooth_pairing_shares_phonebook">Allow access to your contacts and call history</string>
+    <string name="bluetooth_pairing_shares_phonebook">Allow access to your contacts and call history</string>
 
     <!-- Title for BT error dialogs. -->
     <string name="bluetooth_error_title"></string>

@@ -24,6 +24,7 @@ import android.util.SparseIntArray;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.internal.os.BatteryStatsHelper;
+import com.android.settings.core.instrumentation.MetricsFeatureProvider;
 import com.android.settings.fuelgauge.anomaly.action.AnomalyAction;
 import com.android.settings.fuelgauge.anomaly.action.ForceStopAction;
 import com.android.settings.fuelgauge.anomaly.action.LocationCheckAction;

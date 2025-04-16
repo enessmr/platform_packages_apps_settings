@@ -37,6 +37,13 @@ import com.android.settings.testutils.SettingsRobolectricTestRunner;
 import com.android.settings.testutils.shadow.SettingsShadowResources;
 import com.android.settingslib.widget.CandidateInfo;
 
+import com.android.internal.app.NightDisplayController;
+import com.android.internal.logging.nano.MetricsProto;
+import com.android.settings.TestConfig;
+import com.android.settings.testutils.SettingsRobolectricTestRunner;
+import com.android.settings.testutils.shadow.SettingsShadowSystemProperties;
+import com.android.settings.widget.RadioButtonPickerFragment;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,6 +71,7 @@ public class ColorModePreferenceFragmentTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
+        SettingsShadowSystemProperties.clear();
 
         mFragment = spy(new ColorModePreferenceFragment());
         ReflectionHelpers.setField(mFragment, "mController", mController);
@@ -135,6 +143,10 @@ public class ColorModePreferenceFragmentTest {
                     ColorDisplayController.COLOR_MODE_SATURATED,
                 });
         List<? extends CandidateInfo> candidates = mFragment.getCandidates();
+    public void getCandidates() {
+        when(mFragment.getContext()).thenReturn(RuntimeEnvironment.application);
+        List<? extends RadioButtonPickerFragment.CandidateInfo> candidates =
+                mFragment.getCandidates();
 
         assertThat(candidates.size()).isEqualTo(3);
         assertThat(candidates.get(0).getKey())

@@ -1517,6 +1517,7 @@
     <string name="sms_application_title" msgid="4903928270533250448">"簡訊應用程式"</string>
     <string name="sms_change_default_dialog_title" msgid="1958688831875804286">"變更簡訊應用程式？"</string>
     <string name="sms_change_default_dialog_text" msgid="1522783933230274787">"你要改用「<xliff:g id="NEW_APP">%1$s</xliff:g>」而不再使用「<xliff:g id="CURRENT_APP">%2$s</xliff:g>」做為簡訊應用程式嗎？"</string>
+    <string name="sms_change_default_dialog_text" msgid="1522783933230274787">"你要改用「<xliff:g id="NEW_APP">%1$s</xliff:g>」而不再使用「<xliff:g id="CURRENT_APP">%2$s</xliff:g>」做為簡訊應用程式嗎？"</string>
     <string name="sms_change_default_no_previous_dialog_text" msgid="602683880284921998">"使用 <xliff:g id="NEW_APP">%s</xliff:g> 做為簡訊應用程式嗎？"</string>
     <string name="network_scorer_picker_title" msgid="6383879578279046456">"網路評分服務供應商"</string>
     <string name="network_scorer_picker_none_preference" msgid="9028375117241790936">"無"</string>

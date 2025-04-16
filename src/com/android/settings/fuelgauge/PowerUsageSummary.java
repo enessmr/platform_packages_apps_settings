@@ -50,6 +50,7 @@ import com.android.settings.fuelgauge.anomaly.AnomalyDetectionPolicy;
 import com.android.settings.fuelgauge.batterytip.BatteryTipLoader;
 import com.android.settings.fuelgauge.batterytip.BatteryTipPreferenceController;
 import com.android.settings.fuelgauge.batterytip.tips.BatteryTip;
+import com.android.settings.fuelgauge.anomaly.AnomalyUtils;
 import com.android.settings.overlay.FeatureFactory;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.core.AbstractPreferenceController;
@@ -113,6 +114,33 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
     @VisibleForTesting
     BatteryTipPreferenceController mBatteryTipPreferenceController;
     private int mStatsType = BatteryStats.STATS_SINCE_CHARGED;
+
+    private LoaderManager.LoaderCallbacks<List<Anomaly>> mAnomalyLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<List<Anomaly>>() {
+
+                @Override
+                public Loader<List<Anomaly>> onCreateLoader(int id, Bundle args) {
+                    return new AnomalyLoader(getContext(), mStatsHelper);
+                }
+
+                @Override
+                public void onLoadFinished(Loader<List<Anomaly>> loader, List<Anomaly> data) {
+                    final AnomalyUtils anomalyUtils = AnomalyUtils.getInstance(getContext());
+                    anomalyUtils.logAnomalies(mMetricsFeatureProvider, data,
+                            MetricsEvent.FUELGAUGE_POWER_USAGE_SUMMARY);
+
+                    // show high usage preference if possible
+                    mAnomalySummaryPreferenceController.updateAnomalySummaryPreference(data);
+
+                    updateAnomalySparseArray(data);
+                    refreshAnomalyIcon();
+                }
+
+                @Override
+                public void onLoaderReset(Loader<List<Anomaly>> loader) {
+
+                }
+            };
 
     @VisibleForTesting
     LoaderManager.LoaderCallbacks<BatteryInfo> mBatteryInfoLoaderCallbacks =

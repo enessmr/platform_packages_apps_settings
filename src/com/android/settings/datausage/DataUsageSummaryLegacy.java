@@ -43,8 +43,6 @@ import com.android.settings.R;
 import com.android.settings.SummaryPreference;
 import com.android.settings.Utils;
 import com.android.settings.dashboard.SummaryLoader;
-import com.android.settings.search.BaseSearchIndexProvider;
-import com.android.settings.search.Indexable;
 import com.android.settingslib.NetworkPolicyEditor;
 import com.android.settingslib.core.AbstractPreferenceController;
 import com.android.settingslib.net.DataUsageController;

@@ -688,6 +688,7 @@
     <string name="bluetooth_pairing_dialog_sharing_phonebook_title" msgid="7664141669886358618">"Vill du dela telefonboken?"</string>
     <string name="bluetooth_pairing_dialog_contants_request" msgid="5531109163573611348">"<xliff:g id="DEVICE_NAME">%1$s</xliff:g> vill komma åt dina kontakter och din samtalshistorik."</string>
     <string name="bluetooth_pairing_dialog_paring_request" msgid="8451248193517851958">"<xliff:g id="DEVICE_NAME">%1$s</xliff:g> vill parkoppla med Bluetooth. När den är ansluten får den åtkomst till kontakter och samtalshistorik."</string>
+    <string name="bluetooth_pairing_dialog_paring_request" msgid="8451248193517851958">"<xliff:g id="DEVICE_NAME">%1$s</xliff:g> vill parkoppla med Bluetooth. När den är ansluten får den åtkomst till kontakter och samtalshistorik."</string>
     <string name="bluetooth_preference_paired_devices" msgid="1970524193086791964">"Parkopplade enheter"</string>
     <string name="bluetooth_preference_found_media_devices" msgid="1617401232446299411">"Tillgängliga enheter"</string>
     <string name="bluetooth_preference_no_found_devices" msgid="7594339669961811591">"Det finns inga enheter tillgängliga"</string>

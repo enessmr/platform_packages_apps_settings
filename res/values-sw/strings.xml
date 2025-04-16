@@ -1938,6 +1938,7 @@
     <string name="talkback_title" msgid="7912059827205988080">"Talkback"</string>
     <string name="talkback_summary" msgid="8331244650729024963">"Kisoma skrini hasa kwa watu wenye upofu na wenye matatizo ya kuona"</string>
     <string name="select_to_speak_summary" msgid="4282846695497544515">"Gusa vipengee kwenye skrini yako ili usikie vikisoma kwa sauti"</string>
+    <string name="select_to_speak_summary" msgid="4282846695497544515">"Gusa vipengee kwenye skrini yako ili usikie vikisoma kwa sauti"</string>
     <string name="accessibility_captioning_title" msgid="7589266662024836291">"Manukuu"</string>
     <string name="accessibility_screen_magnification_title" msgid="6001128808776506021">"Ukuzaji"</string>
     <string name="accessibility_screen_magnification_gestures_title" msgid="3719929521571489913">"Kuza kwa kugusa mara tatu"</string>
@@ -2840,11 +2841,14 @@
     <string name="nfc_payment_favor_default" msgid="5743781166099608372">"Kila wakati"</string>
     <string name="nfc_payment_favor_open" msgid="1923314062109977944">"Isipokuwa wakati programu nyingine ya malipo imefunguliwa"</string>
     <string name="nfc_payment_pay_with" msgid="7524904024378144072">"Unapolipa ukitumia chaguo la Gusisha ili ulipe, tumia:"</string>
+    <string name="nfc_payment_pay_with" msgid="7524904024378144072">"Unapolipa ukitumia chaguo la Gusisha ili ulipe, tumia:"</string>
     <string name="nfc_how_it_works_title" msgid="1984068457698797207">"Kulipa katika kituo"</string>
     <string name="nfc_how_it_works_content" msgid="4749007806393224934">"Sanidi programu ya malipo. Shikilia tu upande wa nyuma wa simu yako kwenye kituo chochote cha malipo chenye alama ya kulipa bila kugusa."</string>
     <string name="nfc_how_it_works_got_it" msgid="259653300203217402">"Nimeelewa"</string>
     <string name="nfc_more_title" msgid="815910943655133280">"Zaidi..."</string>
     <string name="nfc_payment_set_default_label" msgid="7315817259485674542">"Ungependa kuweka kama mapendeleo yako?"</string>
+    <string name="nfc_payment_set_default" msgid="8532426406310833489">"Ungependa kutumia <xliff:g id="APP">%1$s</xliff:g> unapogusisha ili ulipe?"</string>
+    <string name="nfc_payment_set_default_instead_of" msgid="6993301165940432743">"Ungependa kutumia <xliff:g id="APP_0">%1$s</xliff:g> badala ya <xliff:g id="APP_1">%2$s</xliff:g> unapotumia chaguo la kugusisha ili ulipe?"</string>
     <string name="nfc_payment_set_default" msgid="8532426406310833489">"Ungependa kutumia <xliff:g id="APP">%1$s</xliff:g> unapogusisha ili ulipe?"</string>
     <string name="nfc_payment_set_default_instead_of" msgid="6993301165940432743">"Ungependa kutumia <xliff:g id="APP_0">%1$s</xliff:g> badala ya <xliff:g id="APP_1">%2$s</xliff:g> unapotumia chaguo la kugusisha ili ulipe?"</string>
     <string name="restriction_settings_title" msgid="4233515503765879736">"Vikwazo"</string>

@@ -1518,6 +1518,8 @@
     <string name="sms_change_default_dialog_title" msgid="1958688831875804286">"SMS பயன்பாட்டை மாற்றவா?"</string>
     <string name="sms_change_default_dialog_text" msgid="1522783933230274787">"<xliff:g id="CURRENT_APP">%2$s</xliff:g>க்குப் பதிலாக <xliff:g id="NEW_APP">%1$s</xliff:g>ஐ உங்கள் SMS பயன்பாடாகப் பயன்படுத்தவா?"</string>
     <string name="sms_change_default_no_previous_dialog_text" msgid="602683880284921998">"<xliff:g id="NEW_APP">%s</xliff:g>ஐ உங்கள் SMS பயன்பாடாகப் பயன்படுத்தவா?"</string>
+    <string name="sms_change_default_dialog_text" msgid="1522783933230274787">"<xliff:g id="CURRENT_APP">%2$s</xliff:g>க்குப் பதிலாக <xliff:g id="NEW_APP">%1$s</xliff:g>ஐ உங்கள் SMS பயன்பாடாகப் பயன்படுத்தவா?"</string>
+    <string name="sms_change_default_no_previous_dialog_text" msgid="602683880284921998">"<xliff:g id="NEW_APP">%s</xliff:g>ஐ உங்கள் SMS பயன்பாடாகப் பயன்படுத்தவா?"</string>
     <string name="network_scorer_picker_title" msgid="6383879578279046456">"நெட்வொர்க் மதிப்பீட்டு வழங்குநர்"</string>
     <string name="network_scorer_picker_none_preference" msgid="9028375117241790936">"ஏதுமில்லை"</string>
     <string name="network_scorer_change_active_dialog_title" msgid="3776301550387574975">"வைஃபை அசிஸ்டண்டை மாற்றவா?"</string>

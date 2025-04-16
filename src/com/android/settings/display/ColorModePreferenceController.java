@@ -67,6 +67,8 @@ public class ColorModePreferenceController extends BasePreferenceController {
             mColorDisplayController = new ColorDisplayController(mContext);
         }
         return mColorDisplayController;
+    public boolean isAvailable() {
+        return mConfigWrapper.isScreenWideColorGamut();
     }
 
     @VisibleForTesting

@@ -2842,6 +2842,7 @@
     <string name="nfc_payment_pay_with" msgid="7524904024378144072">"通过触碰付款终端进行付款时使用以下应用："</string>
     <string name="nfc_how_it_works_title" msgid="1984068457698797207">"通过支付终端付款"</string>
     <string name="nfc_how_it_works_content" msgid="4749007806393224934">"设置付款应用，然后只需将手机背面靠近任何带有非接触标志的终端即可。"</string>
+    <string name="nfc_how_it_works_content" msgid="4749007806393224934">"设置付款应用，然后只需将手机背面靠近任何带有非接触标志的终端即可。"</string>
     <string name="nfc_how_it_works_got_it" msgid="259653300203217402">"知道了"</string>
     <string name="nfc_more_title" msgid="815910943655133280">"更多…"</string>
     <string name="nfc_payment_set_default_label" msgid="7315817259485674542">"要设为您的偏好设置吗？"</string>

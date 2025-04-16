@@ -1517,6 +1517,8 @@
     <string name="sms_application_title" msgid="4903928270533250448">"Aplicació d\'SMS"</string>
     <string name="sms_change_default_dialog_title" msgid="1958688831875804286">"Vols canviar l\'aplicació d\'SMS?"</string>
     <string name="sms_change_default_dialog_text" msgid="1522783933230274787">"Vols fer servir <xliff:g id="NEW_APP">%1$s</xliff:g> en lloc de <xliff:g id="CURRENT_APP">%2$s</xliff:g> com a aplicació d\'SMS?"</string>
+    <string name="sms_change_default_dialog_title" msgid="1958688831875804286">"Vols canviar l\'aplicació d\'SMS?"</string>
+    <string name="sms_change_default_dialog_text" msgid="1522783933230274787">"Vols fer servir <xliff:g id="NEW_APP">%1$s</xliff:g> en lloc de <xliff:g id="CURRENT_APP">%2$s</xliff:g> com a aplicació d\'SMS?"</string>
     <string name="sms_change_default_no_previous_dialog_text" msgid="602683880284921998">"Vols fer servir <xliff:g id="NEW_APP">%s</xliff:g> com a aplicació per als SMS?"</string>
     <string name="network_scorer_picker_title" msgid="6383879578279046456">"Proveïdor de valoració de xarxes"</string>
     <string name="network_scorer_picker_none_preference" msgid="9028375117241790936">"Cap"</string>
@@ -2646,6 +2648,8 @@
     <string name="data_usage_uninstalled_apps_users" msgid="7986294489899813194">"Aplicacions i usuaris eliminats"</string>
     <string name="data_usage_received_sent" msgid="5039699009276621757">"<xliff:g id="RECEIVED">%1$s</xliff:g> rebuts, <xliff:g id="SENT">%2$s</xliff:g> enviats"</string>
     <string name="data_usage_total_during_range" msgid="4091294280619255237">"<xliff:g id="RANGE">%2$s</xliff:g>: ús aproximat de <xliff:g id="TOTAL">%1$s</xliff:g>"</string>
+    <string name="data_usage_total_during_range_mobile" product="tablet" msgid="1925687342154538972">"<xliff:g id="RANGE">%2$s</xliff:g>: <xliff:g id="TOTAL">%1$s</xliff:g>, ús aproximat segons la tauleta. L\'operador pot fer un càlcul diferent."</string>
+    <string name="data_usage_total_during_range_mobile" product="default" msgid="5063981061103812900">"<xliff:g id="RANGE">%2$s</xliff:g>: <xliff:g id="TOTAL">%1$s</xliff:g>, ús aproximat segons el telèfon. L\'operador pot fer un càlcul diferent."</string>
     <string name="data_usage_total_during_range_mobile" product="tablet" msgid="1925687342154538972">"<xliff:g id="RANGE">%2$s</xliff:g>: <xliff:g id="TOTAL">%1$s</xliff:g>, ús aproximat segons la tauleta. L\'operador pot fer un càlcul diferent."</string>
     <string name="data_usage_total_during_range_mobile" product="default" msgid="5063981061103812900">"<xliff:g id="RANGE">%2$s</xliff:g>: <xliff:g id="TOTAL">%1$s</xliff:g>, ús aproximat segons el telèfon. L\'operador pot fer un càlcul diferent."</string>
     <string name="data_usage_metered_title" msgid="7383175371006596441">"Restriccions de xarxa"</string>

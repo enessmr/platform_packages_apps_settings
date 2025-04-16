@@ -3235,6 +3235,7 @@
     <string name="notification_importance_low_title" msgid="8131254047772814309">"O‘rtacha"</string>
     <string name="notification_importance_default_title" msgid="9120383978536089489">"Yuqori"</string>
     <string name="notification_importance_high_title" msgid="3058778300264746473">"Shoshilinch"</string>
+    <string name="notification_importance_high_title" msgid="3058778300264746473">"Shoshilinch"</string>
     <string name="allow_interruption" msgid="7136150018111848721">"Bildirishnomalarga ruxsat berish"</string>
     <string name="allow_interruption_summary" msgid="7870159391333957050">"Ilovaga ovozli signal va tebranishni yoqishi hamda ekranga bildirishnomalarni chiqarishiga imkon beradi"</string>
     <string name="notification_channel_summary_min" msgid="5401718014765921892">"Kamroq muhim"</string>

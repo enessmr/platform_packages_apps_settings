@@ -53,7 +53,52 @@ public class NightDisplaySettings extends DashboardFragment
         super.onCreate(savedInstanceState);
 
         final Context context = getContext();
-        mController = new ColorDisplayController(context);
+        mController = new NightDisplayController(context);
+
+        mTimeFormatter = android.text.format.DateFormat.getTimeFormat(context);
+        mTimeFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        if (mTemperaturePreference != null) {
+            mTemperaturePreference.setMax(convertTemperature(mController.getMinimumColorTemperature()));
+            mTemperaturePreference.setContinuousUpdates(true);
+        }
+    }
+
+    @Override
+    protected int getHelpResource() {
+        return R.string.help_url_night_display;
+    }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        super.onCreatePreferences(savedInstanceState, rootKey);
+
+        // Load the preferences from xml.
+        addPreferencesFromResource(R.xml.night_display_settings);
+        mFooterPreferenceMixin.createFooterPreference().setTitle(R.string.night_display_text);
+        mAutoModePreference = (DropDownPreference) findPreference(KEY_NIGHT_DISPLAY_AUTO_MODE);
+        mStartTimePreference = findPreference(KEY_NIGHT_DISPLAY_START_TIME);
+        mEndTimePreference = findPreference(KEY_NIGHT_DISPLAY_END_TIME);
+        mActivatedPreference = (TwoStatePreference) findPreference(KEY_NIGHT_DISPLAY_ACTIVATED);
+        mTemperaturePreference = (SeekBarPreference) findPreference(KEY_NIGHT_DISPLAY_TEMPERATURE);
+        removePreference(KEY_NIGHT_DISPLAY_TEMPERATURE);
+        mTemperaturePreference = null;
+
+
+        mAutoModePreference.setEntries(new CharSequence[] {
+                getString(R.string.night_display_auto_mode_never),
+                getString(R.string.night_display_auto_mode_custom),
+                getString(R.string.night_display_auto_mode_twilight)
+        });
+        mAutoModePreference.setEntryValues(new CharSequence[] {
+                String.valueOf(NightDisplayController.AUTO_MODE_DISABLED),
+                String.valueOf(NightDisplayController.AUTO_MODE_CUSTOM),
+                String.valueOf(NightDisplayController.AUTO_MODE_TWILIGHT)
+        });
+        mAutoModePreference.setOnPreferenceChangeListener(this);
+        mActivatedPreference.setOnPreferenceChangeListener(this);
+        if (mTemperaturePreference != null)
+            mTemperaturePreference.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -62,6 +107,7 @@ public class NightDisplaySettings extends DashboardFragment
 
         // Listen for changes only while visible.
         mController.setListener(this);
+        onDisplayColorModeChanged(mController.getColorMode());
     }
 
     @Override
@@ -123,7 +169,8 @@ public class NightDisplaySettings extends DashboardFragment
     @Override
     public void onActivated(boolean activated) {
         // Update activated and temperature preferences.
-        updatePreferenceStates();
+        if (mTemperaturePreference != null)
+            updatePreferenceStates();
     }
 
     @Override
@@ -134,7 +181,8 @@ public class NightDisplaySettings extends DashboardFragment
 
     @Override
     public void onColorTemperatureChanged(int colorTemperature) {
-        // Update temperature preference.
+        if (mTemperaturePreference != null)
+            // Update temperature preference.
         updatePreferenceStates();
     }
 
