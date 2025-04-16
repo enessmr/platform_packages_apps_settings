@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 The Android Open Source Project
+ * Copyright (C) 2018 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,14 +89,16 @@ import com.android.settings.wifi.ConfigureWifiSettings;
 import com.android.settings.wifi.SavedAccessPointsWifiSettings;
 import com.android.settings.wifi.WifiSettings;
 import java.util.Collection;
-import java.util.HashMap;
 
-public final class SearchIndexableResources {
+public interface SearchIndexableResources {
 
     /**
-     * Identifies subsettings which have an {@link SearchIndexableResource#intentAction} but
-     * whose intents should still be treated as subsettings inside of Settings.
+     * Returns a collection of classes that should be indexed for search.
+     *
+     * Each class should have the SEARCH_INDEX_DATA_PROVIDER public static member.
      */
+
+    Collection<Class> getProviderValues();
     public static final String SUBSETTING_TARGET_PACKAGE = "subsetting_target_package";
 
     @XmlRes

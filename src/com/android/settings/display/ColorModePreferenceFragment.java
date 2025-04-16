@@ -1,33 +1,24 @@
-/*
- * Copyright (C) 2017 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
 package com.android.settings.display;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.VisibleForTesting;
+import android.support.v7.preference.PreferenceScreen;
 
-import com.android.internal.app.NightDisplayController;
+import com.android.internal.app.ColorDisplayController;
 import com.android.internal.logging.nano.MetricsProto;
 
 import com.android.settings.R;
+import com.android.settings.applications.LayoutPreference;
 import com.android.settings.widget.RadioButtonPickerFragment;
+import com.android.settingslib.widget.CandidateInfo;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("WeakerAccess")
-public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
+public class ColorModePreferenceFragment extends RadioButtonPickerFragment
+        implements ColorDisplayController.Callback {
 
     @VisibleForTesting
     static final String KEY_COLOR_MODE_NATURAL = "color_mode_natural";
@@ -35,34 +26,84 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
     static final String KEY_COLOR_MODE_BOOSTED = "color_mode_boosted";
     @VisibleForTesting
     static final String KEY_COLOR_MODE_SATURATED = "color_mode_saturated";
+    @VisibleForTesting
+    static final String KEY_COLOR_MODE_AUTOMATIC = "color_mode_automatic";
 
-    private NightDisplayController mController;
+    private ColorDisplayController mController;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mController = new NightDisplayController(context);
+        mController = new ColorDisplayController(context);
+        mController.setListener(this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mController != null) {
+            mController.setListener(null);
+            mController = null;
+        }
+    }
+
+    @Override
+    protected int getPreferenceScreenResId() {
+        return R.xml.color_mode_settings;
+    }
+
+    @VisibleForTesting
+    void configureAndInstallPreview(LayoutPreference preview, PreferenceScreen screen) {
+        preview.setSelectable(false);
+        screen.addPreference(preview);
+    }
+
+    @Override
+    protected void addStaticPreferences(PreferenceScreen screen) {
+        final LayoutPreference preview = new LayoutPreference(screen.getContext(),
+                R.layout.color_mode_preview);
+        configureAndInstallPreview(preview, screen);
     }
 
     @Override
     protected List<? extends CandidateInfo> getCandidates() {
-        Context c = getContext();
-        return Arrays.asList(
-            new ColorModeCandidateInfo(c.getString(R.string.color_mode_option_natural),
-                    KEY_COLOR_MODE_NATURAL),
-            new ColorModeCandidateInfo(c.getString(R.string.color_mode_option_boosted),
-                    KEY_COLOR_MODE_BOOSTED),
-            new ColorModeCandidateInfo(c.getString(R.string.color_mode_option_saturated),
-                    KEY_COLOR_MODE_SATURATED)
-        );
+        final Context c = getContext();
+        final int[] availableColorModes = c.getResources().getIntArray(
+                com.android.internal.R.array.config_availableColorModes);
+
+        List<ColorModeCandidateInfo> candidates = new ArrayList<>();
+        if (availableColorModes != null) {
+            for (int colorMode : availableColorModes) {
+                if (colorMode == ColorDisplayController.COLOR_MODE_NATURAL) {
+                    candidates.add(new ColorModeCandidateInfo(
+                            c.getText(R.string.color_mode_option_natural),
+                            KEY_COLOR_MODE_NATURAL, true));
+                } else if (colorMode == ColorDisplayController.COLOR_MODE_BOOSTED) {
+                    candidates.add(new ColorModeCandidateInfo(
+                            c.getText(R.string.color_mode_option_boosted),
+                            KEY_COLOR_MODE_BOOSTED, true));
+                } else if (colorMode == ColorDisplayController.COLOR_MODE_SATURATED) {
+                    candidates.add(new ColorModeCandidateInfo(
+                            c.getText(R.string.color_mode_option_saturated),
+                            KEY_COLOR_MODE_SATURATED, true));
+                } else if (colorMode == ColorDisplayController.COLOR_MODE_AUTOMATIC) {
+                    candidates.add(new ColorModeCandidateInfo(
+                            c.getText(R.string.color_mode_option_automatic),
+                            KEY_COLOR_MODE_AUTOMATIC, true));
+                }
+            }
+        }
+        return candidates;
     }
 
     @Override
     protected String getDefaultKey() {
-        if (mController.getColorMode() == NightDisplayController.COLOR_MODE_SATURATED) {
+        final int colorMode = mController.getColorMode();
+        if (colorMode == ColorDisplayController.COLOR_MODE_AUTOMATIC) {
+            return KEY_COLOR_MODE_AUTOMATIC;
+        } else if (colorMode == ColorDisplayController.COLOR_MODE_SATURATED) {
             return KEY_COLOR_MODE_SATURATED;
-        }
-        if (mController.getColorMode() == NightDisplayController.COLOR_MODE_BOOSTED) {
+        } else if (colorMode == ColorDisplayController.COLOR_MODE_BOOSTED) {
             return KEY_COLOR_MODE_BOOSTED;
         }
         return KEY_COLOR_MODE_NATURAL;
@@ -72,13 +113,16 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
     protected boolean setDefaultKey(String key) {
         switch (key) {
             case KEY_COLOR_MODE_NATURAL:
-                mController.setColorMode(NightDisplayController.COLOR_MODE_NATURAL);
+                mController.setColorMode(ColorDisplayController.COLOR_MODE_NATURAL);
                 break;
             case KEY_COLOR_MODE_BOOSTED:
-                mController.setColorMode(NightDisplayController.COLOR_MODE_BOOSTED);
+                mController.setColorMode(ColorDisplayController.COLOR_MODE_BOOSTED);
                 break;
             case KEY_COLOR_MODE_SATURATED:
-                mController.setColorMode(NightDisplayController.COLOR_MODE_SATURATED);
+                mController.setColorMode(ColorDisplayController.COLOR_MODE_SATURATED);
+                break;
+            case KEY_COLOR_MODE_AUTOMATIC:
+                mController.setColorMode(ColorDisplayController.COLOR_MODE_AUTOMATIC);
                 break;
         }
         return true;
@@ -94,8 +138,8 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
         private final CharSequence mLabel;
         private final String mKey;
 
-        ColorModeCandidateInfo(CharSequence label, String key) {
-            super(true);
+        ColorModeCandidateInfo(CharSequence label, String key, boolean enabled) {
+            super(enabled);
             mLabel = label;
             mKey = key;
         }
@@ -116,4 +160,10 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
         }
     }
 
+    @Override
+    public void onAccessibilityTransformChanged(boolean state) {
+        if (state) {
+            getActivity().onBackPressed();
+        }
+    }
 }

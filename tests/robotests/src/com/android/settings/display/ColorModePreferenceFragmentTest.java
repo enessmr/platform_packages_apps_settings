@@ -16,8 +16,26 @@
 package com.android.settings.display;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceScreen;
+
+import com.android.internal.app.ColorDisplayController;
+import com.android.internal.logging.nano.MetricsProto;
+import com.android.settings.R;
+import com.android.settings.applications.LayoutPreference;
+import com.android.settings.testutils.SettingsRobolectricTestRunner;
+import com.android.settings.testutils.shadow.SettingsShadowResources;
+import com.android.settingslib.widget.CandidateInfo;
 
 import com.android.internal.app.NightDisplayController;
 import com.android.internal.logging.nano.MetricsProto;
@@ -29,8 +47,8 @@ import com.android.settings.widget.RadioButtonPickerFragment;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
@@ -39,13 +57,16 @@ import org.robolectric.util.ReflectionHelpers;
 import java.util.List;
 
 @RunWith(SettingsRobolectricTestRunner.class)
-@Config(manifest = TestConfig.MANIFEST_PATH, sdk = TestConfig.SDK_VERSION)
+@Config(shadows = SettingsShadowResources.class)
 public class ColorModePreferenceFragmentTest {
 
     private ColorModePreferenceFragment mFragment;
 
     @Mock
-    private NightDisplayController mController;
+    private ColorDisplayController mController;
+
+    @Mock
+    private Activity mActivity;
 
     @Before
     public void setup() {
@@ -63,6 +84,65 @@ public class ColorModePreferenceFragmentTest {
     }
 
     @Test
+    public void getCandidates_all() {
+        when(mFragment.getContext()).thenReturn(RuntimeEnvironment.application);
+        SettingsShadowResources.overrideResource(
+                com.android.internal.R.array.config_availableColorModes, new int[]{
+                    ColorDisplayController.COLOR_MODE_NATURAL,
+                    ColorDisplayController.COLOR_MODE_BOOSTED,
+                    ColorDisplayController.COLOR_MODE_SATURATED,
+                    ColorDisplayController.COLOR_MODE_AUTOMATIC
+                });
+        List<? extends CandidateInfo> candidates = mFragment.getCandidates();
+
+        assertThat(candidates.size()).isEqualTo(4);
+        assertThat(candidates.get(0).getKey())
+                .isEqualTo(ColorModePreferenceFragment.KEY_COLOR_MODE_NATURAL);
+        assertThat(candidates.get(1).getKey())
+                .isEqualTo(ColorModePreferenceFragment.KEY_COLOR_MODE_BOOSTED);
+        assertThat(candidates.get(2).getKey())
+                .isEqualTo(ColorModePreferenceFragment.KEY_COLOR_MODE_SATURATED);
+        assertThat(candidates.get(3).getKey())
+                .isEqualTo(ColorModePreferenceFragment.KEY_COLOR_MODE_AUTOMATIC);
+    }
+
+    @Test
+    public void getCandidates_none() {
+        when(mFragment.getContext()).thenReturn(RuntimeEnvironment.application);
+        SettingsShadowResources.overrideResource(
+                com.android.internal.R.array.config_availableColorModes, null);
+        List<? extends CandidateInfo> candidates = mFragment.getCandidates();
+
+        assertThat(candidates.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void getCandidates_withAutomatic() {
+        when(mFragment.getContext()).thenReturn(RuntimeEnvironment.application);
+        SettingsShadowResources.overrideResource(
+                com.android.internal.R.array.config_availableColorModes, new int[]{
+                    ColorDisplayController.COLOR_MODE_NATURAL,
+                    ColorDisplayController.COLOR_MODE_AUTOMATIC
+                });
+        List<? extends CandidateInfo> candidates = mFragment.getCandidates();
+
+        assertThat(candidates.size()).isEqualTo(2);
+        assertThat(candidates.get(0).getKey())
+                .isEqualTo(ColorModePreferenceFragment.KEY_COLOR_MODE_NATURAL);
+        assertThat(candidates.get(1).getKey())
+                .isEqualTo(ColorModePreferenceFragment.KEY_COLOR_MODE_AUTOMATIC);
+    }
+
+    @Test
+    public void getCandidates_withoutAutomatic() {
+        when(mFragment.getContext()).thenReturn(RuntimeEnvironment.application);
+        SettingsShadowResources.overrideResource(
+                com.android.internal.R.array.config_availableColorModes, new int[]{
+                    ColorDisplayController.COLOR_MODE_NATURAL,
+                    ColorDisplayController.COLOR_MODE_BOOSTED,
+                    ColorDisplayController.COLOR_MODE_SATURATED,
+                });
+        List<? extends CandidateInfo> candidates = mFragment.getCandidates();
     public void getCandidates() {
         when(mFragment.getContext()).thenReturn(RuntimeEnvironment.application);
         List<? extends RadioButtonPickerFragment.CandidateInfo> candidates =
@@ -77,54 +157,94 @@ public class ColorModePreferenceFragmentTest {
                 .isEqualTo(ColorModePreferenceFragment.KEY_COLOR_MODE_SATURATED);
     }
 
-    @Config(shadows = {SettingsShadowSystemProperties.class})
     @Test
     public void getKey_natural() {
-        Mockito.when(mController.getColorMode()).thenReturn(
-            NightDisplayController.COLOR_MODE_NATURAL);
+        when(mController.getColorMode())
+            .thenReturn(ColorDisplayController.COLOR_MODE_NATURAL);
 
         assertThat(mFragment.getDefaultKey())
                 .isEqualTo(ColorModePreferenceFragment.KEY_COLOR_MODE_NATURAL);
     }
 
-    @Config(shadows = {SettingsShadowSystemProperties.class})
     @Test
     public void getKey_boosted() {
-        Mockito.when(mController.getColorMode()).thenReturn(
-            NightDisplayController.COLOR_MODE_BOOSTED);
+        when(mController.getColorMode())
+            .thenReturn(ColorDisplayController.COLOR_MODE_BOOSTED);
 
         assertThat(mFragment.getDefaultKey())
                 .isEqualTo(ColorModePreferenceFragment.KEY_COLOR_MODE_BOOSTED);
     }
 
-    @Config(shadows = {SettingsShadowSystemProperties.class})
     @Test
     public void getKey_saturated() {
-        Mockito.when(mController.getColorMode()).thenReturn(
-            NightDisplayController.COLOR_MODE_SATURATED);
+        when(mController.getColorMode())
+            .thenReturn(ColorDisplayController.COLOR_MODE_SATURATED);
 
         assertThat(mFragment.getDefaultKey())
             .isEqualTo(ColorModePreferenceFragment.KEY_COLOR_MODE_SATURATED);
     }
 
-    @Config(shadows = {SettingsShadowSystemProperties.class})
+    @Test
+    public void getKey_automatic() {
+        when(mController.getColorMode())
+            .thenReturn(ColorDisplayController.COLOR_MODE_AUTOMATIC);
+
+        assertThat(mFragment.getDefaultKey())
+            .isEqualTo(ColorModePreferenceFragment.KEY_COLOR_MODE_AUTOMATIC);
+    }
+
     @Test
     public void setKey_natural() {
         mFragment.setDefaultKey(ColorModePreferenceFragment.KEY_COLOR_MODE_NATURAL);
-        Mockito.verify(mController).setColorMode(NightDisplayController.COLOR_MODE_NATURAL);
+        verify(mController).setColorMode(ColorDisplayController.COLOR_MODE_NATURAL);
     }
 
-    @Config(shadows = {SettingsShadowSystemProperties.class})
     @Test
     public void setKey_boosted() {
         mFragment.setDefaultKey(ColorModePreferenceFragment.KEY_COLOR_MODE_BOOSTED);
-        Mockito.verify(mController).setColorMode(NightDisplayController.COLOR_MODE_BOOSTED);
+        verify(mController).setColorMode(ColorDisplayController.COLOR_MODE_BOOSTED);
     }
 
-    @Config(shadows = {SettingsShadowSystemProperties.class})
     @Test
     public void setKey_saturated() {
         mFragment.setDefaultKey(ColorModePreferenceFragment.KEY_COLOR_MODE_SATURATED);
-        Mockito.verify(mController).setColorMode(NightDisplayController.COLOR_MODE_SATURATED);
+        verify(mController).setColorMode(ColorDisplayController.COLOR_MODE_SATURATED);
+    }
+
+    @Test
+    public void setKey_automatic() {
+        mFragment.setDefaultKey(ColorModePreferenceFragment.KEY_COLOR_MODE_AUTOMATIC);
+        verify(mController).setColorMode(ColorDisplayController.COLOR_MODE_AUTOMATIC);
+    }
+
+    @Test
+    public void onCreatePreferences_useNewTitle_shouldAddColorModePreferences() {
+        doNothing().when(mFragment).addPreferencesFromResource(anyInt());
+        doNothing().when(mFragment).updateCandidates();
+
+        mFragment.onCreatePreferences(Bundle.EMPTY, null /* rootKey */);
+
+        verify(mFragment).addPreferencesFromResource(R.xml.color_mode_settings);
+    }
+
+    @Test
+    public void addStaticPreferences_shouldAddPreviewImage() {
+        PreferenceScreen mockPreferenceScreen = mock(PreferenceScreen.class);
+        LayoutPreference mockPreview = mock(LayoutPreference.class);
+
+        ArgumentCaptor<Preference> preferenceCaptor = ArgumentCaptor.forClass(Preference.class);
+
+        mFragment.configureAndInstallPreview(mockPreview, mockPreferenceScreen);
+        verify(mockPreview, times(1)).setSelectable(false);
+        verify(mockPreferenceScreen, times(1)).addPreference(preferenceCaptor.capture());
+
+        assertThat(preferenceCaptor.getValue()).isEqualTo(mockPreview);
+    }
+
+    @Test
+    public void onAccessibilityTransformChanged_toggles() {
+        when(mFragment.getActivity()).thenReturn(mActivity);
+        mFragment.onAccessibilityTransformChanged(true /* state */);
+        verify(mActivity).onBackPressed();
     }
 }

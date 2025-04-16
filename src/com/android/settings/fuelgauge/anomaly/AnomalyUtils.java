@@ -33,6 +33,7 @@ import com.android.settings.fuelgauge.anomaly.checker.AnomalyDetector;
 import com.android.settings.fuelgauge.anomaly.checker.BluetoothScanAnomalyDetector;
 import com.android.settings.fuelgauge.anomaly.checker.WakeLockAnomalyDetector;
 import com.android.settings.fuelgauge.anomaly.checker.WakeupAlarmAnomalyDetector;
+import com.android.settingslib.core.instrumentation.MetricsFeatureProvider;
 
 import java.util.ArrayList;
 import java.util.List;
